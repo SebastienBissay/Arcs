@@ -1,6 +1,6 @@
 import processing.core.PApplet;
 
-import static parameters.Parameters.SEED;
+import static parameters.Parameters.*;
 import static save.SaveUtil.saveSketch;
 
 public class Arcs extends PApplet {
@@ -18,7 +18,7 @@ public class Arcs extends PApplet {
     @Override
     public void setup() {
         background(255);
-        stroke(0, 25, 75, 5.1f);
+        stroke(STROKE_COLOR.red(), STROKE_COLOR.green(), STROKE_COLOR.blue(), STROKE_COLOR.alpha());
         noFill();
         blendMode(MULTIPLY);
         noLoop();
@@ -27,9 +27,10 @@ public class Arcs extends PApplet {
     @Override
     public void draw() {
 
-        for (float r = 1; r < 0.9f * min(width, height); r += 0.02) {
-            float startAngle = 2 * TWO_PI * sq(noise(r / 100.f));
-            float endAngle = startAngle + floor(random(1, 13)) * PI / 8;
+        for (float r = MINIMUM_RADIUS; r < MAXIMUM_RADIUS; r += RADIUS_INCREASE) {
+            float startAngle = START_ANGLE_MULTIPLIER * TWO_PI * sq(noise(r * NOISE_SCALE_FACTOR));
+            float endAngle = startAngle
+                    + END_ANGLE_MULTIPLIER * TWO_PI * floor(random(END_ANGLE_LOW_RANGE, END_ANGLE_HIGH_RANGE));
             arc(width / 2.f, height / 2.f, r, r, startAngle, endAngle);
         }
 
